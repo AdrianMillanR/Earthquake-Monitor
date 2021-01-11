@@ -20,5 +20,9 @@ class MainActivity : AppCompatActivity() {
         eqList.add(Earthquake("4","Uta",5.6,273847152L,-102.4756,28.4748))
         eqList.add(Earthquake("5","Roma",1.2,273847152L,-102.4756,28.4748))
         eqList.add(Earthquake("6","Tokio",7.3,273847152L,-102.4756,28.4748))
+
+        val adapter= EqAdapter()
+        binding.eqRecycler.adapter= adapter
+        adapter.submitList(eqList)
     }
 }
