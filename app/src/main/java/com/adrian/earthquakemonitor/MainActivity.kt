@@ -3,6 +3,8 @@ package com.adrian.earthquakemonitor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.earthquakemonitor.databinding.ActivityMainBinding
 
@@ -24,5 +26,15 @@ class MainActivity : AppCompatActivity() {
         val adapter= EqAdapter()
         binding.eqRecycler.adapter= adapter
         adapter.submitList(eqList)
+
+        adapter.onItemClickListener={
+            Toast.makeText(this, it.place, Toast.LENGTH_SHORT).show()
+        }
+
+        if(eqList.isEmpty()) {
+            binding.emptyView.visibility = View.VISIBLE
+        }else{
+            binding.emptyView.visibility = View.GONE
+        }
     }
 }

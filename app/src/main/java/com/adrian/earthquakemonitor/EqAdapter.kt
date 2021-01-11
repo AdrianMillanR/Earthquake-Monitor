@@ -21,6 +21,8 @@ class  EqAdapter : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(DiffCallback)
         }
     }
 
+    lateinit var onItemClickListener: (Earthquake) -> Unit
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EqAdapter.EqViewHolder {
         val binding= EqListItemBinding.inflate(LayoutInflater.from(parent.context))
         return EqViewHolder(binding)
@@ -37,6 +39,9 @@ class  EqAdapter : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(DiffCallback)
         fun bind(earthquake: Earthquake){
             binding.magnitudeText.text=earthquake.magnitude.toString()
             binding.placeText.text=earthquake.place
+            binding.root.setOnClickListener{
+                onItemClickListener(earthquake)
+            }
 
         }
 
