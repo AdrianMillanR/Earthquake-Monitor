@@ -23,8 +23,8 @@ class MainViewModel: ViewModel() {
 
     private suspend fun fetchEarthquakes(): MutableList<Earthquake> {
         return withContext(Dispatchers.IO){
-            val eqListString= service.getLastHourEarthquakes()
-            val eqList=parseEqResult(eqListString)
+            val eqJsonResponse= service.getLastHourEarthquakes()
+            val eqList=parseEqResult(eqJsonResponse)
 
             eqList
         }
@@ -32,28 +32,24 @@ class MainViewModel: ViewModel() {
 
     }
 
-    private fun parseEqResult(eqListString:String): MutableList<Earthquake>{
+    private fun parseEqResult(eqJsonResponse:EqJsonResponse): MutableList<Earthquake>{
         val eqList= mutableListOf<Earthquake>()
-        val eqJsonObject= JSONObject(eqListString)
-        val featuresJsonArray=eqJsonObject.getJSONArray("features")
+        val featureList= eqJsonResponse.features
+        for(feature in featureList){
+            val properties= feature.properties
+            val id= feature.id
 
-        for (i in 0 until featuresJsonArray.length()){
-            val featuresJsonObject=featuresJsonArray[i] as JSONObject
-            val id = featuresJsonObject.getString("id")
+            val magnitude= properties.mag
+            val place= properties.place
+            val time= properties.time
 
-            val propertiesJsonObject= featuresJsonObject.getJSONObject("properties")
-            val place= propertiesJsonObject.getString("place")
-            val magnitude=propertiesJsonObject.getDouble("mag")
-            val time= propertiesJsonObject.getLong("time")
+            val geometry= feature.geometry
+            val latitude= geometry.latitude
+            val longitude= geometry.longitude
 
-            val geometryJsonObject= featuresJsonObject.getJSONObject("geometry")
-            val coordinatesJsonArray= geometryJsonObject.getJSONArray("coordinates")
-            val longitude= coordinatesJsonArray.getDouble(0)
-            val latitude= coordinatesJsonArray.getDouble(1)
-
-            val earthquake = Earthquake(id,place,magnitude,time,longitude,latitude)
-            eqList.add(earthquake)
+            eqList.add(Earthquake(id,place, magnitude, time, longitude, latitude))
         }
+
 
         return eqList
 
