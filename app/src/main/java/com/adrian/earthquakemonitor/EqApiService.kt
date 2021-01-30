@@ -6,12 +6,12 @@ import retrofit2.http.GET
 
 
 interface EqApiService {
-    @GET("application.json")
+    @GET("all_hour.geojson")
     suspend fun getLastHourEarthquakes(): String
 }
 
 private var retrofit = Retrofit.Builder()
-    .baseUrl("https://earthquake.usgs.gov/fdsnws/event/1/ ")
+    .baseUrl("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/")
     .addConverterFactory(ScalarsConverterFactory.create())
     .build()
 
