@@ -1,5 +1,6 @@
 package com.adrian.earthquakemonitor
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.adrian.earthquakemonitor.databinding.EqListItemBinding
 
-class  EqAdapter : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(DiffCallback)  {
+class  EqAdapter(private val context:Context) : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(DiffCallback)  {
 
     companion object DiffCallback: DiffUtil.ItemCallback<Earthquake>(){
         override fun areItemsTheSame(oldItem: Earthquake, newItem: Earthquake): Boolean {
@@ -37,7 +38,7 @@ class  EqAdapter : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(DiffCallback)
 
 
         fun bind(earthquake: Earthquake){
-            binding.magnitudeText.text=earthquake.magnitude.toString()
+            binding.magnitudeText.text=context.getString(R.string.magnitude_format, earthquake.magnitude)
             binding.placeText.text=earthquake.place
             binding.root.setOnClickListener{
                 onItemClickListener(earthquake)
