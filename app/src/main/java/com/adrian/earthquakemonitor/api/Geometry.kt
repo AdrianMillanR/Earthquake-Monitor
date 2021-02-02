@@ -1,4 +1,4 @@
-package com.adrian.earthquakemonitor
+package com.adrian.earthquakemonitor.api
 
 class Geometry(val coordinates : Array<Double>) {
     val longitude: Double

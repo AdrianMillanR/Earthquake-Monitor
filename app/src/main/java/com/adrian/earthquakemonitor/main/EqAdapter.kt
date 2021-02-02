@@ -1,16 +1,18 @@
-package com.adrian.earthquakemonitor
+package com.adrian.earthquakemonitor.main
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.adrian.earthquakemonitor.Earthquake
+import com.adrian.earthquakemonitor.R
 import com.adrian.earthquakemonitor.databinding.EqListItemBinding
 
-class  EqAdapter(private val context:Context) : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(DiffCallback)  {
+class  EqAdapter(private val context:Context) : ListAdapter<Earthquake, EqAdapter.EqViewHolder>(
+    DiffCallback
+)  {
 
     companion object DiffCallback: DiffUtil.ItemCallback<Earthquake>(){
         override fun areItemsTheSame(oldItem: Earthquake, newItem: Earthquake): Boolean {
@@ -24,12 +26,12 @@ class  EqAdapter(private val context:Context) : ListAdapter<Earthquake, EqAdapte
 
     lateinit var onItemClickListener: (Earthquake) -> Unit
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EqAdapter.EqViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EqViewHolder {
         val binding= EqListItemBinding.inflate(LayoutInflater.from(parent.context))
         return EqViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: EqAdapter.EqViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EqViewHolder, position: Int) {
         val earthquake= getItem(position)
         holder.bind(earthquake)
     }

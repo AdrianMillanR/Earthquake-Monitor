@@ -1,5 +1,8 @@
-package com.adrian.earthquakemonitor
+package com.adrian.earthquakemonitor.main
 
+import com.adrian.earthquakemonitor.Earthquake
+import com.adrian.earthquakemonitor.api.EqJsonResponse
+import com.adrian.earthquakemonitor.api.service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,7 +19,7 @@ class MainRepository {
 
     }
 
-    private fun parseEqResult(eqJsonResponse:EqJsonResponse): MutableList<Earthquake>{
+    private fun parseEqResult(eqJsonResponse: EqJsonResponse): MutableList<Earthquake>{
         val eqList= mutableListOf<Earthquake>()
         val featureList= eqJsonResponse.features
         for(feature in featureList){

@@ -1,4 +1,4 @@
-package com.adrian.earthquakemonitor
+package com.adrian.earthquakemonitor.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
