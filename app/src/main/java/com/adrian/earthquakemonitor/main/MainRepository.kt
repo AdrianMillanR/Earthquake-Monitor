@@ -3,10 +3,11 @@ package com.adrian.earthquakemonitor.main
 import com.adrian.earthquakemonitor.Earthquake
 import com.adrian.earthquakemonitor.api.EqJsonResponse
 import com.adrian.earthquakemonitor.api.service
+import com.adrian.earthquakemonitor.database.EqDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MainRepository {
+class MainRepository(private val database: EqDatabase) {
 
     suspend fun fetchEarthquakes(): MutableList<Earthquake> {
         return withContext(Dispatchers.IO){

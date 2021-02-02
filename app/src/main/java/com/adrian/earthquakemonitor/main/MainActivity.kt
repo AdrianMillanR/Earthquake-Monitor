@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.eqRecycler.layoutManager=LinearLayoutManager(this)
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val viewModel = ViewModelProvider(this, MainViewModelFactory(application)).get(MainViewModel::class.java)
 
         val adapter= EqAdapter(this)
         binding.eqRecycler.adapter= adapter
