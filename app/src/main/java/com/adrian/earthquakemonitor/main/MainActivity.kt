@@ -25,8 +25,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.eqList.observe(this, Observer { eqList ->
             adapter.submitList(eqList)
             handleEmptyView(eqList,binding)
+        })
 
+        viewModel.status.observe(this, Observer {
+            apiResponseStatus ->
+            if(apiResponseStatus == ApiResponseStatus.LOADING){
+                binding.loadingWheel.visibility= View.VISIBLE
 
+            }else if(apiResponseStatus==ApiResponseStatus.DONE){
+                binding.loadingWheel.visibility= View.GONE
+
+            }else if(apiResponseStatus==ApiResponseStatus.NOT_INTERNETCONECTION){
+                binding.loadingWheel.visibility= View.GONE
+            }
         })
 
 

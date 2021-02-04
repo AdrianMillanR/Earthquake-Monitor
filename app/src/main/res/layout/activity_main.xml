@@ -29,6 +29,13 @@
             android:gravity="center"
             android:text="No earquake rigth now"/>
 
+        <ProgressBar
+            android:id="@+id/loading_wheel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
 
 
     </FrameLayout>

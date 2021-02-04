@@ -13,14 +13,20 @@ private  val TAG = MainViewModel::class.java.simpleName
 class MainViewModel(application: Application): AndroidViewModel(application) {
     private val database= getDatabase(application)
     private val repository= MainRepository(database)
+     private val _status= MutableLiveData<ApiResponseStatus>()
+    val status : LiveData<ApiResponseStatus>
+        get()= _status
 
     val eqList = repository.eqList
 
     init {
         viewModelScope.launch {
             try {
+                _status.value=ApiResponseStatus.LOADING
                 repository.fetchEarthquakes()
+                _status.value=ApiResponseStatus.DONE
             } catch (e: UnknownHostException){
+                _status.value=ApiResponseStatus.NOT_INTERNETCONECTION
                 Log.d(TAG,"No internet conection.", e)
             }
 
