@@ -1,5 +1,6 @@
 package com.adrian.earthquakemonitor.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.adrian.earthquakemonitor.DetailActivity
 import com.adrian.earthquakemonitor.Earthquake
 import com.adrian.earthquakemonitor.databinding.ActivityMainBinding
 
@@ -42,7 +44,13 @@ class MainActivity : AppCompatActivity() {
 
 
         adapter.onItemClickListener={
-            Toast.makeText(this, it.place, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, it.place, Toast.LENGTH_SHORT).show()
+            val place= it.place
+            val magnitude= it.magnitude
+            val latitude= it.latitude
+            val longiutde= it.longitude
+            val time= it.time
+            openDetailActivity(place,magnitude,longiutde,latitude,time)
         }
     }
 
@@ -52,5 +60,15 @@ class MainActivity : AppCompatActivity() {
         }else{
             binding.emptyView.visibility = View.GONE
         }
+    }
+    
+    private fun openDetailActivity(place:String, magnitude:Double, longitude:Double, latitude:Double, time:Long){
+        val intent= Intent(this,DetailActivity::class.java)
+        intent.putExtra(DetailActivity.EQ_PLACE, place)
+        intent.putExtra(DetailActivity.EQ_MAGNITUDE, magnitude)
+        intent.putExtra(DetailActivity.EQ_LONGITUDE, longitude)
+        intent.putExtra(DetailActivity.EQ_LATITUDE, latitude)
+        intent.putExtra(DetailActivity.EQ_TIME, time)
+        startActivity(intent)
     }
 }
