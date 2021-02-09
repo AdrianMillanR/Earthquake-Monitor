@@ -3,6 +3,7 @@ package com.adrian.earthquakemonitor.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adrian.earthquakemonitor.DetailActivity
 import com.adrian.earthquakemonitor.Earthquake
+import com.adrian.earthquakemonitor.R
 import com.adrian.earthquakemonitor.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +54,11 @@ class MainActivity : AppCompatActivity() {
             val time= it.time
             openDetailActivity(place,magnitude,longiutde,latitude,time)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 
     private fun handleEmptyView(eqList:MutableList<Earthquake>, binding: ActivityMainBinding){
