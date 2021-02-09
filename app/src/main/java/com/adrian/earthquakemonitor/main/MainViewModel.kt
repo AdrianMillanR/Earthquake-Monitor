@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
 private  val TAG = MainViewModel::class.java.simpleName
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application,private val sortType: Boolean): AndroidViewModel(application) {
     private val database= getDatabase(application)
     private val repository= MainRepository(database)
      private val _status= MutableLiveData<ApiResponseStatus>()
@@ -22,14 +22,14 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     get()= _eqList
 
     init {
-        reloadEartquakes(false)
+        reloadEartquakes()
     }
 
-    private fun reloadEartquakes(sortByMagnitude: Boolean){
+    private fun reloadEartquakes(){
         viewModelScope.launch {
             try {
                 _status.value=ApiResponseStatus.LOADING
-                _eqList.value=repository.fetchEarthquakes(sortByMagnitude)
+                _eqList.value=repository.fetchEarthquakes(sortType)
                 _status.value=ApiResponseStatus.DONE
             } catch (e: UnknownHostException){
                 _status.value=ApiResponseStatus.NOT_INTERNETCONECTION

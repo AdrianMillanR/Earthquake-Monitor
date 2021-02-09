@@ -15,6 +15,8 @@ import com.adrian.earthquakemonitor.Earthquake
 import com.adrian.earthquakemonitor.R
 import com.adrian.earthquakemonitor.databinding.ActivityMainBinding
 
+private const val SORT_TYPE_KEY= "sort_type"
+
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.eqRecycler.layoutManager=LinearLayoutManager(this)
-        viewModel = ViewModelProvider(this, MainViewModelFactory(application)).get(MainViewModel::class.java)
+        val sortType=getSortType()
+        viewModel = ViewModelProvider(this, MainViewModelFactory(application, sortType)).get(MainViewModel::class.java)
 
         val adapter= EqAdapter(this)
         binding.eqRecycler.adapter= adapter
@@ -58,6 +61,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getSortType(): Boolean {
+        val prefs= getPreferences(MODE_PRIVATE)
+        return  prefs.getBoolean(SORT_TYPE_KEY, false)
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
@@ -67,10 +76,20 @@ class MainActivity : AppCompatActivity() {
         val itemId= item.itemId
         if( itemId==R.id.main_menu_sort_magnitude){
             viewModel.reloadEartquakesFromDb(true)
+            saveSortType(true)
         }else if(itemId==R.id.main_menu_sort_time){
             viewModel.reloadEartquakesFromDb(false)
+            saveSortType(false)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun saveSortType(sortByMagnitude:Boolean){
+        val prefs= getPreferences( MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putBoolean(SORT_TYPE_KEY,sortByMagnitude)
+        editor.apply()
+
     }
 
     private fun handleEmptyView(eqList:MutableList<Earthquake>, binding: ActivityMainBinding){
