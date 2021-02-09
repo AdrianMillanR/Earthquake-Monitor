@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -15,13 +16,14 @@ import com.adrian.earthquakemonitor.R
 import com.adrian.earthquakemonitor.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.eqRecycler.layoutManager=LinearLayoutManager(this)
-        val viewModel = ViewModelProvider(this, MainViewModelFactory(application)).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainViewModelFactory(application)).get(MainViewModel::class.java)
 
         val adapter= EqAdapter(this)
         binding.eqRecycler.adapter= adapter
@@ -59,6 +61,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId= item.itemId
+        if( itemId==R.id.main_menu_sort_magnitude){
+            viewModel.reloadEartquakesFromDb(true)
+        }else if(itemId==R.id.main_menu_sort_time){
+            viewModel.reloadEartquakesFromDb(false)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun handleEmptyView(eqList:MutableList<Earthquake>, binding: ActivityMainBinding){
