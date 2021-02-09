@@ -3,6 +3,8 @@ package com.adrian.earthquakemonitor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.adrian.earthquakemonitor.databinding.ActivityDetailBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -32,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
         binding.eartquakeMag.text=eqMagnitude.toString()
         binding.earthquakeLatitude.text=eqLatitude.toString()
         binding.earthquakeLongitude.text=eqLongitude.toString()
-        binding.eartquakeDate.text=eqTime.toString()
+        val simpleDateFormat= SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.getDefault())
+        binding.eartquakeDate.text=simpleDateFormat.format(eqTime)
     }
 }
