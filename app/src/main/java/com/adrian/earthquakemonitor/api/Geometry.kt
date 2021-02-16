@@ -1,6 +1,6 @@
 package com.adrian.earthquakemonitor.api
 
-class Geometry(val coordinates : Array<Double>) {
+class Geometry(private val coordinates : Array<Double>) {
     val longitude: Double
     get()= coordinates[0]
 

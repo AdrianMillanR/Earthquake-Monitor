@@ -2,7 +2,6 @@ package com.adrian.earthquakemonitor.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
 
@@ -16,4 +15,4 @@ private var retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create())
     .build()
 
-var service: EqApiService = retrofit.create<EqApiService>(EqApiService::class.java)
+var service: EqApiService = retrofit.create(EqApiService::class.java)

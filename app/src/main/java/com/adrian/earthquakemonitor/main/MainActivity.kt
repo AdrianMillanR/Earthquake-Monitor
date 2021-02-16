@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,7 @@ import com.adrian.earthquakemonitor.databinding.ActivityMainBinding
 private const val SORT_TYPE_KEY= "sort_type"
 
 class MainActivity : AppCompatActivity() {
-    lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -38,14 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.status.observe(this, Observer {
             apiResponseStatus ->
-            if(apiResponseStatus == ApiResponseStatus.LOADING){
-                binding.loadingWheel.visibility= View.VISIBLE
-
-            }else if(apiResponseStatus==ApiResponseStatus.DONE){
-                binding.loadingWheel.visibility= View.GONE
-
-            }else if(apiResponseStatus==ApiResponseStatus.NOT_INTERNETCONECTION){
-                binding.loadingWheel.visibility= View.GONE
+            when (apiResponseStatus){
+                ApiResponseStatus.LOADING -> binding.loadingWheel.visibility= View.VISIBLE
+                ApiResponseStatus.DONE -> binding.loadingWheel.visibility= View.GONE
+                ApiResponseStatus.NOT_INTERNETCONECTION -> binding.loadingWheel.visibility= View.GONE
             }
         })
 

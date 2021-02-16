@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity() {
 
         val bundle= intent.extras!!
         val eqPlace=bundle.getString(EQ_PLACE) ?: ""
-        val eqMagnitude=bundle.getDouble(EQ_MAGNITUDE) ?: ""
+        val eqMagnitude=bundle.getDouble(EQ_MAGNITUDE) ?: 0
         val eqLongitude=bundle.getDouble(EQ_LONGITUDE) ?: ""
         val eqLatitude=bundle.getDouble(EQ_LATITUDE) ?: ""
         val eqTime=bundle.getLong(EQ_TIME) ?: ""
@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         binding.eartquakePlace.text= eqPlace
-        binding.eartquakeMag.text=eqMagnitude.toString()
+        binding.eartquakeMag.text=this.getString(R.string.magnitude_format, eqMagnitude.toFloat())
         binding.earthquakeLatitude.text=eqLatitude.toString()
         binding.earthquakeLongitude.text=eqLongitude.toString()
         val simpleDateFormat= SimpleDateFormat("dd/MMM/yyyy HH:mm:ss", Locale.getDefault())

@@ -1,7 +1,6 @@
 package com.adrian.earthquakemonitor.main
 
 import android.app.Application
-import android.nfc.Tag
 import android.util.Log
 import androidx.lifecycle.*
 import com.adrian.earthquakemonitor.Earthquake

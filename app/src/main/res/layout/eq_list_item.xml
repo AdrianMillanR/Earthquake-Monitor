@@ -33,6 +33,7 @@
             tools:text="Nevada" />
 
         <ImageView
+            android:contentDescription="arrow right"
             android:id="@+id/eq_arrow_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

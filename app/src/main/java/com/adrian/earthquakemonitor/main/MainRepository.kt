@@ -1,6 +1,5 @@
 package com.adrian.earthquakemonitor.main
 
-import androidx.lifecycle.LiveData
 import com.adrian.earthquakemonitor.Earthquake
 import com.adrian.earthquakemonitor.api.EqJsonResponse
 import com.adrian.earthquakemonitor.api.service
